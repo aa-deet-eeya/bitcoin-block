@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+
+from datetime import datetime
+
 cache_tx = {}
 cache_result = []
 result = []
@@ -36,6 +39,9 @@ def writeFinalResult() :
     # try :
     total_wt = 0
     required_index = 0
+
+    # Sort the List based on the Ratio and choose the first X
+    # transactions who have toatal weight combined under 4mil
     cache_result.sort(key=lambda x: x['ratio'], reverse=True)
     for tx in cache_result :
         total_wt += tx['weight']
@@ -43,6 +49,9 @@ def writeFinalResult() :
             break
         required_index +=1
 
+    # Slice the cache_result list with only the required tx which
+    # have a total weight under 4mil and sort it back according to
+    # their index and write to the block.txt file
     cache_result[0:required_index+1]
     cache_result.sort(key=lambda x: x['index'], reverse=False)
 
@@ -56,11 +65,10 @@ def writeFinalResult() :
 
 def __main__() :
     parse_mempool_csv()
-    writeFinalResult()
 
-    # print(cache_result)
-    # final_result()
-    # print(cache_tx)
+    # start = datetime.now()
+    writeFinalResult()
+    # print("Time Taken: ", datetime.now()-start)
 
 if __name__ == '__main__' :
     __main__()

@@ -22,3 +22,4 @@ Output: block.txt with `<txid>` format
 3. Since all the parents_ids should occur before the txid we check if all the parent_ids exist as a key before or not in `cache_tx`,
 4. And for the O(1) lookup time we tradeoff O(n) space (which means the dictionary will fail if the mempool.csv is larger than free memory available on the system).
 5. First we take the ratio of `fee/weight` and sort it and take the first `X` transactions which have combined weight just under 4mil (This is Fractional Knapsack Problem, and the first iteration of the solution)
+6. Reason for going with a non-optimal solution is because of the execution time, the current one take >0.1s where as my other implementation taking >30s
